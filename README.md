@@ -21,6 +21,38 @@ npm run dev
 ## Code Analysis
 ```js
  // Make a HEAD request to check Content-Type header
+try {
+    const response = await fetch(url, { method: 'HEAD' });
+    if (response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.startsWith('video/')) {
+            return true;
+        }
+    }
+} catch (error) {
+    // Handle fetch error
+    console.error('Error checking URL:', error);
+}
+return false;
+```
+Popup.jsx 파일에서 사용자에게 입력받은 URL이 정상적인지 확인하는 코드이다. 입력 받은 URL에 HEAD 요청을 보내 응답 값이 어떤 유형인지 판단하여 올바른 URL인지 확인한다. 응답의 헤더 정보 중에 content-type을 확인하여 비디오 파일인 경우에만 올바른 URL이라고 판단한다. 단, CORS에러가 발생 할 수 있다.
+
+
+## Customizing
+
+### UI/DATA
+```js
+// Before
+async function validateVideoUrl(url) {
+        const videoExtensions = ['.mp4', '.webm', '.avi', '.mov']; // List of common video extensions
+
+        // Check if the URL ends with a valid video extension
+        const urlLower = url.toLowerCase();
+        if (videoExtensions.some(ext => urlLower.endsWith(ext))) {
+            return true;
+        }
+
+        // Make a HEAD request to check Content-Type header
         try {
             const response = await fetch(url, { method: 'HEAD' });
             if (response.ok) {
@@ -34,8 +66,23 @@ npm run dev
             console.error('Error checking URL:', error);
         }
         return false;
+    }
 ```
-Popup.jsx 파일에서 사용자에게 입력받은 URL이 정상적인지 확인하는 코드이다. 입력 받은 URL에 HEAD 요청을 보내 응답 값이 어떤 유형인지 판단하여 올바른 URL인지 확인한다. 응답의 헤더 정보 중에 content-type을 확인하여 비디오 파일인 경우에만 올바른 URL이라고 판단한다. 단, CORS에러가 발생 할 수 있다.
+
+```js
+// After
+function validateVideoUrl(url) {
+    return new Promise(resolve => {
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+        video.onloadedmetadata = () => resolve(true);
+        video.onerror = () => resolve(false);
+        video.src = url;
+    });
+}
+```
+기존에는 영상 URL이 정상인지 조회 할 때 영상 URL로 fetch를 날려서 검사했었습니다. 이는 CORS에 걸리기 쉽지만 영상을 재생 할 때는 CORS가 상관 없기 때문에 URL검사를 실제 비디오 태그에 넣는 방식으로 변경하였습니다.
+
 
 ## License
 

@@ -13,29 +13,14 @@ export default function Popup({ setVideoList, setCurrentVideoSrc, setIsPopup }) 
         setIsPopup(false);
     }
 
-    async function validateVideoUrl(url) {
-        const videoExtensions = ['.mp4', '.webm', '.avi', '.mov']; // List of common video extensions
-
-        // Check if the URL ends with a valid video extension
-        const urlLower = url.toLowerCase();
-        if (videoExtensions.some(ext => urlLower.endsWith(ext))) {
-            return true;
-        }
-
-        // Make a HEAD request to check Content-Type header
-        try {
-            const response = await fetch(url, { method: 'HEAD' });
-            if (response.ok) {
-                const contentType = response.headers.get('content-type');
-                if (contentType && contentType.startsWith('video/')) {
-                    return true;
-                }
-            }
-        } catch (error) {
-            // Handle fetch error
-            console.error('Error checking URL:', error);
-        }
-        return false;
+    function validateVideoUrl(url) {
+        return new Promise(resolve => {
+            const video = document.createElement('video');
+            video.preload = 'metadata';
+            video.onloadedmetadata = () => resolve(true);
+            video.onerror = () => resolve(false);
+            video.src = url;
+        });
     }
 
 
