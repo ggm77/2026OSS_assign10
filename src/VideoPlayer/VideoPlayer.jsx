@@ -131,7 +131,7 @@ function VideoPlayer() {
 
     return (
         <div className="VideoPlayer">
-            <video ref={videoRef} src={currentVideoSrc} onClick={handlePlayPause}>
+            <video ref={videoRef} src={currentVideoSrc} onClick={handlePlayPause} style={{maxHeight: "500px"}}>
             </video>
             <div className="VideoPlayer__controls">
                 <div className="control-group control-group-btn">

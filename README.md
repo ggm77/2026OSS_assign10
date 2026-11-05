@@ -40,6 +40,17 @@ Popup.jsx 파일에서 사용자에게 입력받은 URL이 정상적인지 확�
 
 ## Customizing
 
+### Style
+```html
+<!-- Before -->
+<video ref={videoRef} src={currentVideoSrc} onClick={handlePlayPause} >
+```
+```html
+<!-- After -->
+<video ref={videoRef} src={currentVideoSrc} onClick={handlePlayPause} style={{maxHeight: "500px"}}>
+```
+기존에는 영상을 원본 크기로 화면에 그대로 그려서 고해상도의 영상은 화면에 다 들어가지 않는 문제가 있었다. 최대 높이를 설정하여 해결하였다.
+
 ### UI/DATA
 ```js
 // Before
