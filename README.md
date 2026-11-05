@@ -1,76 +1,43 @@
-<h1 align='center'>Video Player</h1>
+## 선정 이유
+영상을 스트리밍하고 조작하는 프로젝트에 관심을 가지고 있어서 기본적인 영상 스트리밍을 제공하는 이 프로젝트를 선정하게 되었습니다.
 
-[![video-player](https://github.com/sahilatahar/Video-Player/assets/100127570/8315e5d3-9b16-4b37-a50c-141a96f2e72e)]()
+## 주요 기능
+data.js에 저장된 영상 URL을 통해 받은 영상을 스트리밍합니다. 또는 사용자에게 직접 URL을 받아 영상을 재생합니다.
 
-Welcome to the Video-Player React Project! This project provides a modern and user-friendly video player interface built using ReactJS, HTML, CSS, and JavaScript. The Video-Player is designed to be fully responsive and packed with a range of features to enhance your video watching experience.
+## 실행 방법
+```bash
+npm install
+npm run dev
+```
 
-## Features
+## Project Structure
+- **VideoPlayer.jsx**: URL로 받은 비디오를 재생시키는 컴포넌트이다. 영상 재생, 볼륨 조절, 영상 재생 위치등의 정보를 조작하는 역할을 한다.
+- **Context.jsx**: data.js 파일에 저장된 영상의 정보를 전역 변수로서 사용할 수 있게 컴포넌트 형태로 만들어주는 컴포넌트.
+- **Popup.jsx**: 특정 영상의 URL을 사용자에게 받아서 재생할 때 영상의 URL을 검증하고 팝업을 띄워주는 컴포넌트.
 
-- &#9658; Play/Pause: Easily start and pause the video playback with a single click.
-- &#9632; Stop: Stop the video playback and reset it to the beginning.
-- 🔊 Volume Control: Adjust the volume level to your preference by increasing or decreasing the volume.
-- 🔇 Mute: Quickly mute or unmute the video's audio with the mute button.
-- &#9970; Full-Screen: Enjoy your videos in full-screen mode for an immersive viewing experience.
-- &#9202; Remaining Time: The video player displays the remaining time of the current video.
-- &#9654;&#9664; Navigation: Seamlessly navigate to the next or previous video in the playlist.
-- &#128250; Play by URL: Paste a valid video URL to play a video directly from the web.
+## React Component
+- **VideoPlayer**: Context 컴포넌트를 통해 받아온 비디오 URL을 플레이리스트로써 사용하고, video 태그를 통해 실제 영상을 재생시킨다. 
 
-## New UI and Controls
-
-The Video-Player project boasts a brand-new user interface that is both visually appealing and intuitive to use. The controls have been thoughtfully designed to provide easy access to the various functionalities while keeping the user experience smooth and engaging.
-
-## Live Preview
-
-Check out the live preview of the Video-Player project on Netlify: [Live Preview](https://video-player-sahilatahar.netlify.app/)
-
-## Getting Started
-
-To run the Video-Player project locally, follow these steps:
-
-1. Clone this repository to your local machine using:
-
-   ```
-   git clone https://github.com/sahilatahar/video-player.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```
-   cd video-player
-   ```
-
-3. Install the required dependencies using your preferred package manager. For example, with npm:
-
-   ```
-   npm install
-   ```
-
-4. Start the development server:
-
-   ```
-   npm run dev
-   ```
-
-5. Open your web browser and go to `http://localhost:5173` to access the Video-Player application.
-
-## Technologies Used
-
-- ReactJS: Building the user interface and managing component-based architecture.
-- Vite: Fast and lightweight frontend tooling for development.
-- HTML: Structuring the content and layout of the video player.
-- CSS and SCSS: Styling the UI components and ensuring responsiveness.
-- JavaScript: Adding interactivity and logic to the video player functionality.
-
-## Contributions
-
-Contributions to the Video-Player React Project are welcome! If you have any improvements, bug fixes, or additional features in mind, feel free to fork this repository, make your changes, and submit a pull request.
+## Code Analysis
+```js
+ // Make a HEAD request to check Content-Type header
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            if (response.ok) {
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.startsWith('video/')) {
+                    return true;
+                }
+            }
+        } catch (error) {
+            // Handle fetch error
+            console.error('Error checking URL:', error);
+        }
+        return false;
+```
+Popup.jsx 파일에서 사용자에게 입력받은 URL이 정상적인지 확인하는 코드이다. 입력 받은 URL에 HEAD 요청을 보내 응답 값이 어떤 유형인지 판단하여 올바른 URL인지 확인한다. 응답의 헤더 정보 중에 content-type을 확인하여 비디오 파일인 경우에만 올바른 URL이라고 판단한다. 단, CORS에러가 발생 할 수 있다.
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE), which means you are free to use, modify, and distribute the code as you see fit.
 
----
-
-We hope you enjoy using the Video-Player for your video playback needs. If you have any questions or feedback, please don't hesitate to reach out.
-
-Happy video watching! 🎥🍿
