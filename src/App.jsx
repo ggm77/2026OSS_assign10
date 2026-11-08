@@ -14,7 +14,11 @@ function App() {
       {!isPopup && <button className="popup-btn" onClick={() => setIsPopup(true)}><i className="ri-links-line"></i></button>}
 
       {isPopup && <Popup {...{ setVideoList, setCurrentVideoSrc, setIsPopup }} />}
-      <VideoPlayer />
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <h1>Video Player</h1>
+        <br></br>
+        <VideoPlayer />
+      </div>
     </div>
   )
 }

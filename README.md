@@ -40,6 +40,36 @@ Popup.jsx 파일에서 사용자에게 입력받은 URL이 정상적인지 확�
 
 ## Customizing
 
+### Text
+```js
+// Before
+return (
+<div className="App">
+    {!isPopup && <button className="popup-btn" onClick={() => setIsPopup(true)}><i className="ri-links-line"></i></button>}
+
+    {isPopup && <Popup {...{ setVideoList, setCurrentVideoSrc, setIsPopup }} />}
+    <VideoPlayer />
+</div>
+)
+```
+``` js
+// After
+return (
+<div className="App">
+    {!isPopup && <button className="popup-btn" onClick={() => setIsPopup(true)}><i className="ri-links-line"></i></button>}
+
+    {isPopup && <Popup {...{ setVideoList, setCurrentVideoSrc, setIsPopup }} />}
+    <div style={{ display: "flex", flexDirection: "column" }}>
+    <h1>Video Player</h1>
+    <br></br>
+    <VideoPlayer />
+    </div>
+</div>
+)
+```
+기존 메인 화면에서 비디오 플레이어만 띄우다가 비디오 플레이어라는 제목을 붙였습니다.
+
+
 ### Style
 ```html
 <!-- Before -->
