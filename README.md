@@ -54,6 +54,30 @@ Popup.jsx 파일에서 사용자에게 입력받은 URL이 정상적인지 확�
 ### UI/DATA
 ```js
 // Before
+const videosURLs = [
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+    "https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+]
+```
+``` js
+// After
+const videosURLs = [
+    "https://fshs.seohamin.com/api/v2/auth/files/3e46053fbb044cef9b60f661317f4d5c/content?download=false",
+    "https://fshs.seohamin.com/api/v2/auth/files/9be610e435f94a7895486d0e4bc226b8/content?download=false"
+]
+```
+기본적으로 재생할 영상의 URL을 교체함. 기존에는 인증에 막혀 영상이 재생되지 않았지만, 이를 해결함.
+
+### UI/DATA
+```js
+// Before
 async function validateVideoUrl(url) {
         const videoExtensions = ['.mp4', '.webm', '.avi', '.mov']; // List of common video extensions
 
